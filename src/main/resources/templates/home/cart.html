@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mein Einkaufswagen</title>
+    <link href="/images/design/logo.jpg" rel="icon" type="image/x-icon">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+
+<body>
+<nav th:insert="fragments/navbar.html" style="background: white"
+     class="navbar sticky-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-4 border-bottom m-2"></nav>
+<section class="h-100 h-custom">
+    <div class="container py-2 h-100">
+        <div class="row">
+            <p class="center display-4">Mein Einkaufswagen</p>
+            <p class="center display-6 text-muted pb-4">Alle Einkäufe auf einen Blick:</p>
+        </div>
+        <div th:if="${#lists.isEmpty(user.cartItems)}">
+            <div class="row gy-4 justify-content-center">
+                <div class="alert alert-warning pt-2 w-75" role="alert">
+                    <h4 class="alert-heading text-center">Dein Warenkorb ist aktuell noch leer!</h4>
+                    <p class="text-center">In Deinem Einkaufwagen befinden sich aktuell noch keine Gemälde. Das kann
+                        sich aber schon bald ändern!</p>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${#lists.isEmpty(user.cartItems)}">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="card bg-light">
+                    <div class="card-body pt-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mb-3" th:each="item: ${user.cartItems}">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div>
+                                                    <img
+                                                            th:src="${item.imageUrl}"
+                                                            class="img-fluid rounded-3" alt="Shopping item"
+                                                            style="height: 65px; width:65px">
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h5 th:text="${item.name}"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div style="width: 80px;">
+                                                <span><span class="text-muted" th:text="${item.price}"></span>
+                                            <span class="text-muted"> €</span></span>
+                                                </div>
+                                                <a id="btn-remove-from-cart-cart" class="btn btn-sm btn-danger mx-3"
+                                                   th:href="@{/toggle-cart/{productId}(productId=${item.id})}">Entfernen
+                                                    <i class="bi bi-trash-fill"></i></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col text-end">
+                                <hr>
+                                <span><strong>Summe: </strong><strong th:text="${sum}"></strong>
+                                            <strong class="text-muted"> €</strong></span>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center my-4">
+                <a type="button" id="btn-checkout" class="btn btn-success btn-block btn-lg" th:href="@{/checkout}">Jetzt
+                    verbindlich kaufen</a>
+            </div>
+            <p class="text-muted text-center">Deine Rechnung erhältst Du in einer gesonderten E-Mail.</p>
+        </div>
+    </div>
+</section>
+<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

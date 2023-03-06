@@ -1,0 +1,28 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/fragments.css}">
+
+<a class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" th:href="@{/}">
+
+    <img alt="image bibx" height="60" src="/images/design/logo.jpg" width="60">
+</a>
+
+<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <li><a aria-current="page" class="nav-link active text-black" th:href="@{/}">Gem&auml;lde</a></li>
+    <li><a class="nav-link active text-black" th:href="@{/faq}">FAQs</a></li>
+    <li><a class="nav-link active text-black" th:href="@{/about}">&Uuml;ber uns</a></li>
+</ul>
+
+<form class="col-2 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:action="@{/}">
+    <input class="form-control form-control-dark" id="keyword" name="searchQuery" placeholder="Suche..."
+           size="50"
+           th:value="${searchQuery}" type="text"/>
+</form>
+
+<div class="col-3 text-end">
+    <button id="btn-cart" class="btn btn-outline-secondary mx-4" type="button">
+        <a class="nav-link" th:href="@{/cart}"><i class="bi-cart-fill me-1"></i> Einkaufswagen</a>
+        <button id="btn-logout" class="btn btn-secondary" type="button">
+            <a class="nav-link" th:href="@{/logout}"> Logout</a>
+        </button>
+    </button>
+</div>

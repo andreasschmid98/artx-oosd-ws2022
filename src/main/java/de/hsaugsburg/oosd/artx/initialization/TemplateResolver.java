@@ -1,0 +1,33 @@
+package de.hsaugsburg.oosd.artx.initialization;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+
+
+/**
+ * This is needed to enable live reloading for some members of the development team.
+ * For more information on this, visit:
+ * https://stackoverflow.com/questions/40057057/spring-boot-and-thymeleaf-hot-swap-templates-and-resources-once-again
+ */
+@Configuration
+public class TemplateResolver {
+    @Autowired
+    private ThymeleafProperties properties;
+    @Value("${spring.thymeleaf.templates_root:}")
+    private String templatesRoot;
+
+    @Bean
+    public ITemplateResolver defaultTemplateResolver() {
+        FileTemplateResolver resolver = new FileTemplateResolver();
+        resolver.setSuffix(properties.getSuffix());
+        resolver.setPrefix(templatesRoot);
+        resolver.setTemplateMode(properties.getMode());
+        resolver.setCacheable(properties.isCache());
+        return resolver;
+    }
+}
